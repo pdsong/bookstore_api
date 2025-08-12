@@ -18,6 +18,7 @@ default: &default
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: localhost   
 
 
 development:
@@ -88,8 +89,8 @@ production:
   primary: &primary_production
     <<: *default
     database: bookstore_api_production
-    username: bookstore_api
-    password: <%= ENV["BOOKSTORE_API_DATABASE_PASSWORD"] %>
+    username: root
+    password: root
   cache:
     <<: *primary_production
     database: bookstore_api_production_cache

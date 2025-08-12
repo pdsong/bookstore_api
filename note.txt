@@ -1,0 +1,33 @@
+
+          jwt:
+
+rails c
+bookstore-api(dev)> token=JWT.encode({message: 'helloyanzu'},'my')
+=> "eyJhbGciOiJIUzI1NiJ9.eyJtZXNzYWdlIjoiaGVsbG95YW56dSJ9.rNsUfYDKmYd_mSrG1sC2LhBI5d4ngiMPQDgTnAT-osg"
+
+bookstore-api(dev)> JWT.decode(token,'my')
+=> [{"message"=>"helloyanzu"}, {"alg"=>"HS256"}]
+
+
+
+
+
+
+
+
+测试
+root@vm001:/home/railsPro/bookstore_api# curl -X POST http://localhost:3000/api/v1/tokens -H "Content-Type: application/json" -d '{
+  "user": {
+    "email": "3@qq.com",
+    "password": "111"
+  }
+}'
+{"token":"eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozLCJleHAiOjE3NTUwOTIwNzZ9.l7jBHXC5tm1xiObGG95Gio0g9ZbXkJk8Ld4SRgx1iYo","email":"3@qq.com"}
+
+
+
+  # curl -X PUT http://localhost:3000/api/v1/users/3 -H "Content-Type: application/json"  -d '{"user": {"email": "333a@qq.com"}}'
+  # curl -X PUT http://localhost:3000/api/v1/users/3 -H "Content-Type: application/json" -H "Authorization: eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozLCJleHAiOjE3NTUwOTIwNzZ9.l7jBHXC5tm1xiObGG95Gio0g9ZbXkJk8Ld4SRgx1iYo" -d '{"user": {"email": "333a@qq.com"}}'
+
+
+curl -X DELETE http://localhost:3000/api/v1/users/1  -H "Content-Type: application/json" -H "Authorization: eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozLCJleHAiOjE3NTUwOTIwNzZ9.l7jBHXC5tm1xiObGG95Gio0g9ZbXkJk8Ld4SRgx1iYo"

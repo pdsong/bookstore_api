@@ -1,5 +1,6 @@
 class Api::V1::UsersController < ApplicationController
   before_action :set_user, only: [ :show, :update, :destroy ]
+  before_action :check_owner, only: %i[update destroy]
 
   # GET /api/v1/users
   def index
@@ -16,7 +17,7 @@ class Api::V1::UsersController < ApplicationController
     render json: @user
   end
 
-#   curl -X POST http://localhost:3000/api/v1/users -H "Content-Type: application/json" -d '{"user": {"email":"4@qq.com",  "password":"111"}}'
+  #   curl -X POST http://localhost:3000/api/v1/users -H "Content-Type: application/json" -d '{"user": {"email":"4@qq.com",  "password":"111"}}'
   def create
     @user= User.new(user_params)
     if @user.save
@@ -50,5 +51,8 @@ class Api::V1::UsersController < ApplicationController
   end
   def set_user
     @user = User.find(params[:id])
+  end
+  def check_owner
+    head :forbidden unless current_user && current_user.id == @user.id
   end
 end
